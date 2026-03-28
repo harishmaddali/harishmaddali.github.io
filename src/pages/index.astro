@@ -1,0 +1,299 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../styles/global.css';
+import TechIcon from '../components/TechIcon.astro';
+import icons from '@iconify-json/simple-icons/icons.json';
+
+const title = 'Harish Maddali — Product Engineering Head (AI)';
+const description =
+	'Twelve years building full-stack systems and agentic AI products, with a focus on voice AI, RAG, and shipping at startups and enterprises.';
+
+function orgSvg(slug: keyof typeof icons.icons) {
+	return icons.icons[slug]?.body ?? '';
+}
+---
+
+<Layout {title} {description}>
+	<header class="site-header">
+		<div class="wrap site-header__inner">
+			<a href="#top" class="logo-mark" aria-label="Home">HM</a>
+			<nav class="nav" aria-label="Primary">
+				<a href="#experience">Experience</a>
+				<a href="#projects">Projects</a>
+				<a href="#stack">Tech stack</a>
+				<a href="#education">Education</a>
+			</nav>
+		</div>
+	</header>
+
+	<main id="top">
+		<section class="hero wrap" aria-labelledby="hero-heading">
+			<p class="hero__eyebrow">Portfolio</p>
+			<h1 id="hero-heading">Harish Maddali</h1>
+			<p class="hero__lead">
+				Product Engineering Head (AI) with twelve years of experience from full-stack applications to agentic AI
+				solutions. Specialized in AI products powered by voice models—leading teams, customers, and delivery at
+				startups and large enterprises.
+			</p>
+			<div class="hero__meta">
+				<span>Hyderabad, India</span>
+				<a href="mailto:maddali.harish@gmail.com">maddali.harish@gmail.com</a>
+				<a href="tel:+919951618906">+91 99516 18906</a>
+				<a href="https://linkedin.com/in/harishmaddali" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+			</div>
+		</section>
+
+		<section class="section wrap" id="stack" aria-labelledby="stack-heading">
+			<h2 class="section__title" id="stack-heading">Tech stack</h2>
+			<p class="section__intro">
+				Tools and platforms I use across voice AI, agents, full-stack delivery, and cloud operations.
+			</p>
+			<div class="tech-grid">
+				<span class="tech-pill"><TechIcon slug="amazonwebservices" label="AWS" /> AWS</span>
+				<span class="tech-pill"><TechIcon slug="microsoftazure" label="Azure" /> Azure</span>
+				<span class="tech-pill"><TechIcon slug="googlecloud" label="Google Cloud" /> Google Cloud</span>
+				<span class="tech-pill"><TechIcon slug="typescript" label="TypeScript" /> TypeScript</span>
+				<span class="tech-pill"><TechIcon slug="python" label="Python" /> Python</span>
+				<span class="tech-pill"><TechIcon slug="react" label="React" /> React</span>
+				<span class="tech-pill"><TechIcon slug="nodedotjs" label="Node.js" /> Node.js</span>
+				<span class="tech-pill"><TechIcon slug="nextdotjs" label="Next.js" /> Next.js</span>
+				<span class="tech-pill"><TechIcon slug="tailwindcss" label="Tailwind CSS" /> Tailwind</span>
+				<span class="tech-pill"><TechIcon slug="docker" label="Docker" /> Docker</span>
+				<span class="tech-pill"><TechIcon slug="terraform" label="Terraform" /> Terraform</span>
+				<span class="tech-pill"><TechIcon slug="kubernetes" label="Kubernetes" /> Kubernetes</span>
+				<span class="tech-pill"><TechIcon slug="postgresql" label="PostgreSQL" /> PostgreSQL</span>
+				<span class="tech-pill"><TechIcon slug="mongodb" label="MongoDB" /> MongoDB</span>
+				<span class="tech-pill"><TechIcon slug="redis" label="Redis" /> Redis</span>
+				<span class="tech-pill"><TechIcon slug="apachekafka" label="Apache Kafka" /> Kafka</span>
+				<span class="tech-pill"><TechIcon slug="githubactions" label="GitHub Actions" /> GitHub Actions</span>
+				<span class="tech-pill"><TechIcon slug="openai" label="OpenAI" /> OpenAI</span>
+				<span class="tech-pill"><TechIcon slug="anthropic" label="Anthropic" /> Anthropic</span>
+				<span class="tech-pill"><TechIcon slug="claude" label="Claude" /> Claude</span>
+				<span class="tech-pill"><TechIcon slug="googlegemini" label="Google Gemini" /> Gemini</span>
+				<span class="tech-pill"><TechIcon slug="langchain" label="LangChain" /> LangChain</span>
+				<span class="tech-pill"><TechIcon slug="langgraph" label="LangGraph" /> LangGraph</span>
+				<span class="tech-pill"><TechIcon slug="huggingface" label="Hugging Face" /> Hugging Face</span>
+				<span class="tech-pill"><TechIcon slug="pytorch" label="PyTorch" /> PyTorch</span>
+				<span class="tech-pill"><TechIcon slug="deepgram" label="Deepgram" /> Deepgram</span>
+				<span class="tech-pill"><TechIcon slug="elevenlabs" label="ElevenLabs" /> ElevenLabs</span>
+				<span class="tech-pill"><TechIcon slug="livekit" label="LiveKit" /> LiveKit</span>
+				<span class="tech-pill"><TechIcon slug="webrtc" label="WebRTC" /> WebRTC</span>
+				<span class="tech-pill"><TechIcon slug="milvus" label="Milvus" /> Milvus</span>
+				<span class="tech-pill"><TechIcon fallback="Pi" label="Pinecone" /> Pinecone</span>
+				<span class="tech-pill"><TechIcon fallback="Qd" label="Qdrant" /> Qdrant</span>
+				<span class="tech-pill"><TechIcon fallback="Lf" label="Langfuse" /> Langfuse</span>
+				<span class="tech-pill"><TechIcon slug="puppeteer" label="Puppeteer" /> Puppeteer</span>
+				<span class="tech-pill"><TechIcon slug="coolify" label="Coolify" /> Coolify</span>
+			</div>
+		</section>
+
+		<section class="section wrap" id="experience" aria-labelledby="exp-heading">
+			<h2 class="section__title" id="exp-heading">Experience</h2>
+			<p class="section__intro">Roles spanning AI-native products, platform engineering, and engineering leadership.</p>
+
+			<div class="timeline">
+				<article class="card">
+					<div class="card__head">
+						<div class="card__org">
+							<span class="card__logo card__logo--text" aria-hidden="true">VQ</span>
+							<div>
+								<h3 class="card__title">Product Engineering Head (AI)</h3>
+								<p class="card__company">Voiceqube, LLC</p>
+							</div>
+						</div>
+						<p class="card__dates">Aug 2025 — Present</p>
+					</div>
+					<ul>
+						<li>
+							Designing, architecting, and delivering AI-native voice products for clients in recruitment and banking.
+						</li>
+						<li>
+							Built four realtime voice agents for AI-based mock and live interviews using WebRTC, LiveKit, Cartesian,
+							Deepgram, GPT-5.1, and Claude Sonnet 3.5.
+						</li>
+						<li>Owned cloud and infrastructure setup from the ground up.</li>
+						<li>
+							Led a twelve-person team (design, frontend, backend) to ship two fully developed AI-native products from
+							scratch.
+						</li>
+					</ul>
+					<div class="card__tags">
+						<span class="tag">Voice AI</span>
+						<span class="tag">WebRTC</span>
+						<span class="tag">LiveKit</span>
+						<span class="tag">Deepgram</span>
+					</div>
+				</article>
+
+				<article class="card">
+					<div class="card__head">
+						<div class="card__org">
+							<span class="card__logo card__logo--text" aria-hidden="true">AS</span>
+							<div>
+								<h3 class="card__title">Co-founder &amp; CTO</h3>
+								<p class="card__company">Askiyo</p>
+							</div>
+						</div>
+						<p class="card__dates">Oct 2024 — Aug 2025</p>
+					</div>
+					<ul>
+						<li>Built the team and led engineering for a low-code, AI-driven workflow SaaS.</li>
+						<li>
+							Shipped twelve agents for meeting capture, lead qualification, proposals, project plans, and sales
+							training.
+						</li>
+						<li>Experimented continuously with vector DBs and chunking approaches to improve agent output.</li>
+						<li>
+							Built a hybrid evals workflow with LLM-as-judge and human-in-the-loop to finetune agents over time.
+						</li>
+						<li>Used AI-driven internal processes to maximize engineering output with a lean team.</li>
+						<li>Built content-generation agents to support marketing and growth.</li>
+						<li>Grew the company from zero to ten enterprise customers (~$30K ARR).</li>
+					</ul>
+					<div class="card__tags">
+						<span class="tag">AI agents</span>
+						<span class="tag">RAG</span>
+						<span class="tag">Evals</span>
+						<span class="tag">LangChain</span>
+					</div>
+				</article>
+
+				<article class="card">
+					<div class="card__head">
+						<div class="card__org">
+							<span class="card__logo" aria-hidden="true">
+								{
+									orgSvg('icicibank') ? (
+										<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" set:html={orgSvg('icicibank')} />
+									) : (
+										<span class="card__logo--text">IC</span>
+									)
+								}
+							</span>
+							<div>
+								<h3 class="card__title">Engineering Manager &amp; Senior Software Engineer</h3>
+								<p class="card__company">ICICI Bank — Innovation Labs</p>
+							</div>
+						</div>
+						<p class="card__dates">May 2018 — Jul 2024</p>
+					</div>
+					<ul>
+						<li>
+							Designed and developed ICICI Bank’s first DevOps architecture, adopted across internal tech verticals and
+							vendors.
+						</li>
+						<li>
+							Architected a no-code, AI-native customer conversations platform using modern LLMs and RAG.
+						</li>
+						<li>Built an end-to-end measurement framework for key DevOps pipeline metrics.</li>
+						<li>
+							Shipped the first store locator service in the first week of COVID-19 to help people find open stores
+							nearby.
+						</li>
+						<li>
+							Developed a customizable Node.js state-machine service that underpins ten-plus internal products.
+						</li>
+						<li>Led three teams (seventeen people) across four products and three business teams.</li>
+						<li>Delivered twelve new products for new business ventures inside the bank.</li>
+					</ul>
+					<div class="card__tags">
+						<span class="tag">DevOps</span>
+						<span class="tag">RAG</span>
+						<span class="tag">Node.js</span>
+						<span class="tag">Leadership</span>
+					</div>
+				</article>
+
+				<article class="card">
+					<div class="card__head">
+						<div class="card__org">
+							<span class="card__logo" aria-hidden="true">
+								{
+									orgSvg('adp') ? (
+										<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" set:html={orgSvg('adp')} />
+									) : (
+										<span class="card__logo--text">AD</span>
+									)
+								}
+							</span>
+							<div>
+								<h3 class="card__title">Platform Engineer</h3>
+								<p class="card__company">Lifion by ADP</p>
+							</div>
+						</div>
+						<p class="card__dates">Jun 2014 — May 2018</p>
+					</div>
+					<ul>
+						<li>
+							Built the configurable designer experience in React on Lifion, ADP’s no-code HCM platform.
+						</li>
+						<li>
+							Designed reusable drag-and-drop components and a generic payroll solution to demonstrate platform
+							capabilities.
+						</li>
+					</ul>
+					<div class="card__tags">
+						<span class="tag">React</span>
+						<span class="tag">No-code</span>
+						<span class="tag">HCM</span>
+					</div>
+				</article>
+			</div>
+		</section>
+
+		<section class="section wrap" id="projects" aria-labelledby="proj-heading">
+			<h2 class="section__title" id="proj-heading">Projects</h2>
+			<p class="section__intro">Selected builds from personal work and side ventures.</p>
+			<div class="projects">
+				<article class="project-card">
+					<h3>Get Your Jarvis AI</h3>
+					<p class="project-card__dates">Jan 2026 — Present</p>
+					<p>
+						Open-source personal assistant agent for screening calls and handling routine tasks, built with LiveKit,
+						ElevenLabs, GPT-5.2, LangGraph, and related tooling.
+					</p>
+				</article>
+				<article class="project-card">
+					<h3>Pilot AI</h3>
+					<p class="project-card__dates">Feb 2026 — Present</p>
+					<p>
+						OpenClaw-based agent management platform to configure, manage, and automate operations—deepening work on
+						Linux, Docker, Claude Code, and agentic systems.
+					</p>
+				</article>
+				<article class="project-card">
+					<h3>MyAroundly</h3>
+					<p class="project-card__dates">Oct 2023 — May 2024</p>
+					<p>
+						Proximity-based discovery for events and experiences, including context-driven search with NLP to surface
+						relevant options.
+					</p>
+				</article>
+				<article class="project-card">
+					<h3>TelosAir</h3>
+					<p class="project-card__dates">Apr 2023 — Oct 2023</p>
+					<p>
+						Infrastructure and data pipelines for AQI, PM2.5, and pollutant sensor data from IoT devices into AWS, with
+						processing via Kafka.
+					</p>
+				</article>
+			</div>
+		</section>
+
+		<section class="section wrap" id="education" aria-labelledby="edu-heading">
+			<h2 class="section__title" id="edu-heading">Education</h2>
+			<p class="section__intro">Formal training in economics and engineering.</p>
+			<div class="edu">
+				<div>
+					<h3>M.Sc. (Hons.) Economics + B.E. (Hons.) Civil Engineering</h3>
+					<p>BITS Pilani</p>
+				</div>
+				<p class="card__dates">Jul 2009 — Jun 2014</p>
+			</div>
+		</section>
+	</main>
+
+	<footer class="site-footer wrap">
+		<p>© {new Date().getFullYear()} Harish Maddali · Built with Astro</p>
+	</footer>
+</Layout>
