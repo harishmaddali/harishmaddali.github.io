@@ -1,0 +1,32 @@
+---
+import icons from '@iconify-json/simple-icons/icons.json';
+
+interface Props {
+	label: string;
+	slug?: keyof typeof icons.icons;
+	fallback?: string;
+}
+
+const { slug, label, fallback } = Astro.props;
+const body = slug ? icons.icons[slug]?.body : undefined;
+---
+
+{
+	body ? (
+		<span class="tech-icon" title={label}>
+			<svg
+				class="tech-icon__svg"
+				viewBox="0 0 24 24"
+				xmlns="http://www.w3.org/2000/svg"
+				role="img"
+				aria-hidden="true"
+				set:html={`<title>${label}</title>${body}`}
+			/>
+		</span>
+	) : (
+		<span class="tech-icon tech-icon--fallback" title={label}>
+			<span class="tech-icon__abbr" aria-hidden="true">{fallback ?? label.slice(0, 2).toUpperCase()}</span>
+			<span class="sr-only">{label}</span>
+		</span>
+	)
+}
