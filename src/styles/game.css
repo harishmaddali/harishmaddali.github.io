@@ -1,0 +1,539 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=JetBrains+Mono:wght@400;500;700&family=Press+Start+2P&display=swap');
+
+:root {
+  --bg-0: #0a0418;
+  --bg-1: #1a0b2e;
+  --bg-2: #2a1257;
+  --ink: #f4ecff;
+  --ink-dim: #a99cc4;
+  --neon-c: #22e8d5;
+  --neon-m: #ff3d8a;
+  --neon-y: #ffd866;
+  --neon-v: #9a6bff;
+  --ground: #1d0a3a;
+  --ground-top: #5b2dbf;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: #000;
+  color: var(--ink);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  overflow: hidden;
+}
+
+#stage {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(80% 60% at 50% 20%, #2a1257 0%, #100527 55%, #050111 100%);
+}
+
+#frame {
+  position: relative;
+  width: min(100vw, calc(100vh * 16 / 9));
+  aspect-ratio: 16 / 9;
+  box-shadow: 0 0 0 1px rgba(154, 107, 255, 0.25), 0 0 80px rgba(154, 107, 255, 0.15),
+    inset 0 0 120px rgba(10, 4, 24, 0.6);
+  background: #0a0418;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+#crt {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  background: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 0px,
+        rgba(0, 0, 0, 0) 2px,
+        rgba(0, 0, 0, 0.18) 2.5px,
+        rgba(0, 0, 0, 0) 3.5px
+      ),
+    radial-gradient(120% 90% at 50% 50%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.5) 100%);
+  mix-blend-mode: multiply;
+}
+
+#vignette {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 51;
+  box-shadow: inset 0 0 140px rgba(0, 0, 0, 0.7);
+}
+
+#hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 40;
+  pointer-events: none;
+  font-family: 'Press Start 2P', 'JetBrains Mono', monospace;
+  color: var(--ink);
+  text-shadow: 0 0 6px rgba(34, 232, 213, 0.55);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+}
+
+#hud .group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#hud .pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: rgba(10, 4, 24, 0.55);
+  border: 1px solid rgba(154, 107, 255, 0.4);
+  backdrop-filter: blur(4px);
+}
+
+#hud .pill .key {
+  color: var(--neon-c);
+}
+
+#hud .crystal {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  background: conic-gradient(from 45deg, #22e8d5, #9a6bff, #22e8d5);
+  transform: rotate(45deg);
+  box-shadow: 0 0 8px var(--neon-c);
+}
+
+#hud .heart {
+  color: var(--neon-m);
+  text-shadow: 0 0 6px var(--neon-m);
+}
+
+#hud .right {
+  text-align: right;
+}
+
+#modal {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 3, 20, 0.55);
+  backdrop-filter: blur(2px);
+}
+
+#modal.show {
+  display: flex;
+  animation: fadein 0.18s ease-out;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.card {
+  width: min(640px, 78%);
+  background: linear-gradient(180deg, rgba(26, 11, 46, 0.96), rgba(10, 4, 24, 0.96));
+  border: 1px solid var(--neon-c);
+  box-shadow: 0 0 0 1px rgba(34, 232, 213, 0.25), 0 0 40px rgba(34, 232, 213, 0.35),
+    inset 0 0 30px rgba(154, 107, 255, 0.12);
+  color: var(--ink);
+  padding: 22px 26px 20px;
+  font-family: 'VT323', 'JetBrains Mono', monospace;
+  position: relative;
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0) 3px,
+    rgba(255, 255, 255, 0.025) 4px
+  );
+}
+
+.card .eyebrow {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: var(--neon-c);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.card .eyebrow .idx {
+  color: var(--neon-m);
+}
+
+.card h2 {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 18px;
+  line-height: 1.4;
+  margin: 0 0 4px;
+  color: var(--ink);
+  text-shadow: 0 0 10px rgba(34, 232, 213, 0.55);
+}
+
+.card .sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--neon-y);
+  margin-bottom: 14px;
+  letter-spacing: 0.02em;
+}
+
+.card .body {
+  font-family: 'VT323', monospace;
+  font-size: 22px;
+  line-height: 1.35;
+  color: var(--ink);
+  min-height: 120px;
+  white-space: pre-wrap;
+}
+
+.card .body .cursor {
+  display: inline-block;
+  width: 0.55ch;
+  background: var(--neon-c);
+  height: 0.95em;
+  vertical-align: -2px;
+  margin-left: 2px;
+  animation: blink 1s steps(1, end) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.card .foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--ink-dim);
+}
+
+.card .foot .hint {
+  color: var(--neon-c);
+}
+
+.card .links {
+  display: flex;
+  gap: 14px;
+  margin-top: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+
+.card .links a {
+  color: var(--neon-c);
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(34, 232, 213, 0.5);
+}
+
+.card .links a:hover {
+  color: var(--neon-m);
+  border-color: var(--neon-m);
+}
+
+#title {
+  position: absolute;
+  inset: 0;
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  background: radial-gradient(120% 80% at 50% 30%, rgba(154, 107, 255, 0.25), transparent 60%),
+    radial-gradient(80% 60% at 50% 90%, rgba(255, 61, 138, 0.25), transparent 60%), #0a0418;
+  color: var(--ink);
+}
+
+#title.hidden {
+  display: none;
+}
+
+#title .logo {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(20px, 3.8vw, 48px);
+  line-height: 1.2;
+  text-align: center;
+  color: var(--ink);
+  text-shadow: 0 0 14px rgba(34, 232, 213, 0.6), 4px 0 0 rgba(255, 61, 138, 0.6),
+    -4px 0 0 rgba(34, 232, 213, 0.6);
+  letter-spacing: 0.02em;
+}
+
+#title .sub {
+  font-family: 'VT323', monospace;
+  font-size: clamp(16px, 1.6vw, 22px);
+  color: var(--neon-c);
+  letter-spacing: 0.04em;
+}
+
+#title .press {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(10px, 1vw, 13px);
+  margin-top: 18px;
+  color: var(--neon-y);
+  animation: blink 1.2s steps(1, end) infinite;
+}
+
+#title .keys {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, auto));
+  gap: 6px 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--ink-dim);
+  margin-top: 18px;
+}
+
+#title .keys b {
+  color: var(--ink);
+}
+
+#title .by {
+  margin-top: 24px;
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  color: var(--ink-dim);
+}
+
+#title button {
+  margin-top: 8px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  color: #0a0418;
+  background: var(--neon-c);
+  border: 0;
+  padding: 14px 22px;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  box-shadow: 0 0 0 1px #0a0418, 0 0 0 3px var(--neon-c), 6px 6px 0 0 var(--neon-m);
+  transition: transform 0.08s;
+}
+
+#title button:hover {
+  transform: translate(-2px, -2px);
+}
+
+#title button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 1px #0a0418, 0 0 0 3px var(--neon-c), 2px 2px 0 0 var(--neon-m);
+}
+
+#toast {
+  position: absolute;
+  left: 50%;
+  top: 60px;
+  transform: translateX(-50%);
+  z-index: 55;
+  pointer-events: none;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: var(--neon-y);
+  text-shadow: 0 0 8px rgba(255, 216, 102, 0.7);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+#toast.show {
+  opacity: 1;
+}
+
+#end {
+  position: absolute;
+  inset: 0;
+  z-index: 65;
+  display: none;
+  background: rgba(8, 3, 20, 0.85);
+  backdrop-filter: blur(4px);
+  align-items: center;
+  justify-content: center;
+}
+
+#end.show {
+  display: flex;
+}
+
+#end .panel {
+  width: min(820px, 86%);
+  max-height: 84%;
+  overflow: auto;
+  background: linear-gradient(180deg, rgba(26, 11, 46, 0.98), rgba(10, 4, 24, 0.98));
+  border: 1px solid var(--neon-m);
+  box-shadow: 0 0 60px rgba(255, 61, 138, 0.35), inset 0 0 30px rgba(34, 232, 213, 0.1);
+  padding: 28px 32px;
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
+}
+
+#end h1 {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 24px;
+  margin: 0 0 4px;
+  color: var(--ink);
+  text-shadow: 0 0 12px rgba(255, 61, 138, 0.6);
+}
+
+#end .ssub {
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  color: var(--neon-c);
+  margin-bottom: 18px;
+}
+
+#end .stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+}
+
+#end .stats div {
+  border: 1px solid rgba(154, 107, 255, 0.5);
+  padding: 10px 12px;
+  background: rgba(10, 4, 24, 0.6);
+}
+
+#end .stats b {
+  display: block;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: var(--neon-y);
+  margin-bottom: 6px;
+  letter-spacing: 0.08em;
+}
+
+#end .recap {
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  line-height: 1.35;
+  color: var(--ink);
+  max-height: 340px;
+  overflow: auto;
+  padding-right: 8px;
+}
+
+#end .recap h3 {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: var(--neon-c);
+  margin: 14px 0 4px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+#end .recap h3:first-child {
+  margin-top: 0;
+}
+
+#end .actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+#end button,
+#end a.btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  padding: 12px 16px;
+  background: var(--neon-c);
+  color: #0a0418;
+  border: 0;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: 0 0 0 1px #0a0418, 4px 4px 0 0 var(--neon-m);
+}
+
+#end button.alt {
+  background: transparent;
+  color: var(--neon-c);
+  box-shadow: inset 0 0 0 1px var(--neon-c);
+}
+
+#end button:hover {
+  transform: translate(-1px, -1px);
+}
+
+#touch {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 45;
+  padding: 14px;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+#touch .pad {
+  display: flex;
+  gap: 10px;
+  pointer-events: auto;
+}
+
+#touch button {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 1px solid rgba(154, 107, 255, 0.5);
+  background: rgba(10, 4, 24, 0.6);
+  color: var(--ink);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 14px;
+  backdrop-filter: blur(4px);
+}
+
+body.touch #touch {
+  display: flex;
+}
